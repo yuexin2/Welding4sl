@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" 
+    android:layout_margin="5dp">
+    <TextView 
+        android:layout_width="match_parent"  
+    	android:layout_height="wrap_content"
+    	android:gravity="center"
+    	android:textSize="40dp"
+    	android:text="接收数据"
+        />
+    <EditText android:id="@+id/editText1"
+	    android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:editable="false"
+		android:cursorVisible="false"
+		android:scrollbars="vertical"
+		android:ellipsize="end" />
+	<LinearLayout 
+	    	android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+		    >
+	
+			<Button android:id="@+id/button_clean"
+			 android:layout_weight="1"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				 android:onClick="onMyButtonClick"
+				 android:background="@drawable/photo_btn"
+				android:text="清空" />
+			<Button android:id="@+id/button_break" 
+			android:layout_weight="1"
+				android:layout_height="wrap_content" 
+				android:layout_width="wrap_content"
+				android:onClick="onMyButtonClick"
+				android:background="@drawable/next_btn"
+				android:text="@string/button_break" />
+			<Button 
+			    android:id="@+id/ok4bt"
+	            android:layout_width="wrap_content"
+	            android:layout_weight="1"
+	            android:layout_height="wrap_content"
+	            android:onClick="onMyButtonClick"
+	            android:background="@drawable/ok_btn"
+	            android:text="确认"
+	            />
+	</LinearLayout>
+	
+</LinearLayout>  
