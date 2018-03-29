@@ -223,9 +223,10 @@
             </LinearLayout>
         </ScrollView>
         <Button
+            android:id="@+id/inputFinish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="登                 录"
+            android:text="输入完成"
             android:background="@drawable/blue_btn"
             />
     </LinearLayout>
