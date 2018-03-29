@@ -49,14 +49,14 @@ public class BluetoothService extends Service {
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
-		Toast.makeText(getApplicationContext(), "onBind", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "onBind", Toast.LENGTH_SHORT).show();
 		return null;
 	}
 
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
-		Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT).show();
 		// 得到当地的蓝牙适配器
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (mChatService == null)
@@ -67,7 +67,7 @@ public class BluetoothService extends Service {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-		Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT).show();
 		// 蓝牙聊天服务站
 		if (mChatService != null)
 			mChatService.stop();
@@ -112,7 +112,7 @@ public class BluetoothService extends Service {
 		}
 		
 		// TODO Auto-generated method stub
-		Toast.makeText(getApplicationContext(), "onStartCommand", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "onStartCommand", Toast.LENGTH_SHORT).show();
 		int requestCode = intent.getExtras().getInt("requestCode");
 		int resultCode = intent.getExtras().getInt("resultCode");
 		switch (requestCode) {
@@ -147,7 +147,7 @@ public class BluetoothService extends Service {
 	}
 
 	private void setupChat() {
-		Toast.makeText(getApplicationContext(), "setupChat", Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), "setupChat", Toast.LENGTH_SHORT).show();
 
 		// 初始化bluetoothchatservice执行蓝牙连接
 		mChatService = new BluetoothChatService(this, mHandler);
