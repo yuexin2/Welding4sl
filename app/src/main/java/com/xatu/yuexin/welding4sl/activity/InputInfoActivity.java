@@ -38,9 +38,15 @@ public class InputInfoActivity extends AppCompatActivity {
         constructionNum = (EditText) findViewById(R.id.constructionNum);//施工企业编号
         managerNum = (EditText) findViewById(R.id.managerNum);//管理编号
         inputFinish = (Button)findViewById(R.id.inputFinish);
-
+        inputFinish.setOnClickListener(clickListener);
 
     }
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            //想法，先判断由蓝牙service获取数据。若没有数据则一直等待
+        }
+    };
 
 
 

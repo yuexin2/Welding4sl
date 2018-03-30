@@ -21,6 +21,8 @@ import com.xatu.yuexin.util.bluetooth.BluetoothDeviceListActivity;
 import com.xatu.yuexin.welding4sl.R;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BluetoothService extends Service {
 
@@ -125,7 +127,7 @@ public class BluetoothService extends Service {
 				// 把蓝牙设备对象
 				BluetoothDevice device = mBluetoothAdapter
 						.getRemoteDevice(address);
-				Toast.makeText(getApplicationContext(), address, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(getApplicationContext(), address, Toast.LENGTH_SHORT).show();
 				// 试图连接到装置
 				mChatService.connect(device);
 			}
@@ -198,7 +200,15 @@ public class BluetoothService extends Service {
 					
 //	                    mInputEditText.getText().append(readMessage);
 	                    fmsg+=readMessage;
+					//获取到数据，进行处理。
+					//String bluetoothStr = msg.getData().getString(TOAST);
+
 	                 Toast.makeText(getApplicationContext(), fmsg, Toast.LENGTH_SHORT).show();
+					Map map = analysisBluetoothStr(fmsg);
+					if(map.size() > 1){
+						fmsg = "";
+					}
+
 					break;
 				case MESSAGE_DEVICE_NAME:
 					// 保存该连接装置的名字
@@ -215,5 +225,26 @@ public class BluetoothService extends Service {
 				}
 			}
 		};
+
+		private Map<String,String> analysisBluetoothStr(String str){
+			Map<String,String> map = new HashMap<String,String>();
+			if (str.substring(0,2).equals("(@") && str.substring(str.length()-2,str.length()).equals("#)")){//表示数据
+				String[] strs = str.split("\n");
+				String dataType="";
+				for (int i = 0;i<strs.length;i++){
+					if(strs[i].contains("@")){
+						//刚刚开始。解析数据类型
+						dataType = strs[i].subSequence( strs[i].indexOf("@")+12,strs[i].indexOf("@")+14).toString();
+						map.put("dataType",dataType);
+					}else{
+						//分析数据
+						if(strs[i].contains(":")){
+							map.put((strs[i].subSequence(0, strs[i].indexOf(":"))).toString().trim(),strs[i].subSequence( strs[i].indexOf(":")+1,strs[i].length()).toString().trim());
+						}
+					}
+				}
+			}
+			return map;
+		}
 
 }
