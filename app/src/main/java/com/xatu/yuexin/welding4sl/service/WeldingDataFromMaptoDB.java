@@ -25,105 +25,126 @@ public class WeldingDataFromMaptoDB {
 
 
     public void fromMaptoDB(Map map){
-
+        insert15hot(map);
     }
 
-    private int insert49hot(Map map) {
+    private int insert15hot(Map map) {
 
         // TODO Auto-generated method stub
         int res = 0;
         //DBResult rst = new DBResult();
         // Connection conn = JdbcUtils.getConnection();
         String[] msgs ={"","","","","","","0","","","","",""};//初始化解决即使没有GPS信息也可插入
-        String gpsdata=map.get("GPS").toString();
-        if(gpsdata!=null){
-            msgs = gpsdata.split(";");
-        }
+//        String gpsdata=map.get("GPS").toString();
+//        if(gpsdata!=null){
+//            msgs = gpsdata.split(";");
+//        }
 
 
 
-        if(msgs[3].indexOf("N")==-1 ){
-            msgs[1]="999999999999";
-            msgs[2]="999999999999";
-            msgs[4]="999999999999";
-        }
+//        if(msgs[3].indexOf("N")==-1 ){
+//            msgs[1]="999999999999";
+//            msgs[2]="999999999999";
+//            msgs[4]="999999999999";
+//        }
 
 
-        switch (Integer.parseInt(msgs[6]))
-        {
-            case 0:msgs[6]="未定位";break;
-            case 1:msgs[6]="非差分定位";break;
-            case 2:msgs[6]="差分定位";break;
-            case 6:msgs[6]="正在估算";break;
-            default: break;
-        }
+//        switch (Integer.parseInt(msgs[6]))
+//        {
+//            case 0:msgs[6]="未定位";break;
+//            case 1:msgs[6]="非差分定位";break;
+//            case 2:msgs[6]="差分定位";break;
+//            case 6:msgs[6]="正在估算";break;
+//            default: break;
+//        }
 
-        String tempdate = (String) map.get("Date (Time)");
-        System.out.println(tempdate);
-        String date = tempdate.split(" ")[0];
-        System.out.println(date);
-        String time = tempdate.split(" ")[1];
-        time = time.substring(1,time.length()-1);
-        System.out.println(time);
+        String sql = "insert into "+DBHelper.TB_NAME_INFO+"( md5,HCompany,HManagement,HNo,HDate,HHour,HEnd,HProject,HOperat,HWay,HInfo,HMode,HPipe1,HBrand1,HPipe2,HBrand2,HConstruction_code,HTemp,HNorme,HPE11,HDiam,HThick,HTHE,HDrg,HPb,HPmB,HTb,HTbRe,HPs,HPmS,HTs,HTsRe,HTej,HTup,HPf,HPmF,HTf,HTfRe,HPco,HPmC,HTCo,HTrCo,HEr,HGPS_UTC,HGPS_latitude,HGPS_longitude,HGPS_status,HGPS_high)"
 
-        String checkSql = "select * from tempp05hotmeltdata where HManagement='"+map.get("Serial No.")+"' and HDate='"+date+"' and HHour='"+ time+"'";
-        System.out.println(checkSql);
+                + " values ('"+md5Str+"','"
+                + v2g9Info[13]
+                + "','"
+                + v2g9Info[1]
+                + "','"
+                + v2g9Info[4]
+                + "','"
+                + v2g9Info[5]
+                + "','"
+                + v2g9Info[6]
+                + "','"
+                + v2g9Info[7]
 
-
-        String sql = "insert into "+DBHelper.TB_NAME_WELDING_DATA_HOT+"( HFrame,HDate,HHour,HManagement,HOperat,HWay,HInfo," +
-                "HNorme,HPE11," +
-                "HDiam," +
-                "HTHE," +
-                "HDrg," +
-                "HPmB," +
-                "HTsRe," +
-                "HTej," +
-                "HPmC," +
-                "HTCo," +
-                "HTrCo,HThick,HEr,Hcompany" +
-                "HGPS_UTC,HGPS_latitude,HGPS_longitude,HGPS_status,HGPS_high)"
-                + " values ('"
-                +map.get("Machine Type")
                 + "','"
-                + date
+                + v2g9Info[9]
                 + "','"
-                +time
+                + v2g9Info[48]
                 + "','"
-                + map.get("Serial No.")
+                + v2g9Info[11]
                 + "','"
-                + map.get("Operator Code")
+                + v2g9Info[12]
                 + "','"
-                + map.get("Job Name")
+                + v2g9Info[14]
                 + "','"
-                + map.get("Current Joint")
+                + v2g9Info[15]
                 + "','"
-                + map.get("Weld Std")
+                + v2g9Info[16]
                 + "','"
-                + map.get("Material")
+                + v2g9Info[17]
                 + "','"
-                + map.get("外 径")
+                + v2g9Info[18]
                 + "','"
-                + map.get("Actual temp.")
+                + v2g9Info[19]
                 + "','"
-                + map.get("Slide press.")
+                + v2g9Info[20]
                 + "','"
-                + map.get("Heat soak press.")
+                + v2g9Info[21]
                 + "','"
-                + map.get("Heat soak time")
+                + v2g9Info[22]
                 + "','"
-                + map.get("Chg. over time")
+                + v2g9Info[23]
                 + "','"
-                + map.get("Fusion press.")
+                + v2g9Info[24]
                 + "','"
-                + map.get("Desired Cool Time")
+                + v2g9Info[25]
                 + "','"
-                + map.get("Cool Time")
+                + v2g9Info[27]
                 + "','"
-                + map.get("SDR")
+                + v2g9Info[28]
                 + "','"
-                + map.get("INFORMATIONS")
+                + v2g9Info[29]
                 + "','"
-                + map.get("COMPANY CODE")
+                + v2g9Info[30]
+                + "','"
+                + v2g9Info[31]
+                + "','"
+                + v2g9Info[32]
+                + "','"
+                + v2g9Info[33]
+                + "','"
+                + v2g9Info[34]
+                + "','"
+                + v2g9Info[35]
+                + "','"
+                + v2g9Info[36]
+                + "','"
+                + v2g9Info[37]
+                + "','"
+                + v2g9Info[38]
+                + "','"
+                + v2g9Info[39]
+                + "','"
+                + v2g9Info[40]
+                + "','"
+                + v2g9Info[41]
+                + "','"
+                + v2g9Info[42]
+                + "','"
+                + v2g9Info[43]
+                + "','"
+                + v2g9Info[44]
+                + "','"
+                + v2g9Info[45]
+                + "','"
+                + v2g9Info[46]
                 + "','"
                 +(Integer.parseInt(msgs[1].substring(0, 2))+8)+"时"+msgs[1].substring(2,4)+"分"+msgs[1].substring(4,6)+"秒"
                 + "','"

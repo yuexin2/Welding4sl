@@ -205,7 +205,6 @@ public class BluetoothService extends Service {
 
 	                // Toast.makeText(getApplicationContext(), fmsg, Toast.LENGTH_SHORT).show();
 					Map map = analysisBluetoothStr(fmsg);
-					Toast.makeText(getApplicationContext(), "分析完成", Toast.LENGTH_SHORT).show();
 					if(map.size() > 1){
 						//说明数据传输完成
 						fmsg = "";
@@ -234,25 +233,23 @@ public class BluetoothService extends Service {
 
 
 	private Map<String,String> analysisBluetoothStr(String str){
-			Map<String,String> map = new HashMap<String,String>();
-			if (str.substring(0,2).equals("(@") && str.substring(str.length()-2,str.length()).equals("#)")){//表示数据
-				Toast.makeText(getApplicationContext(), "开始分析", Toast.LENGTH_SHORT).show();
-				String[] strs = str.split("\n");
-				String dataType="";
-				for (int i = 0;i<strs.length;i++){
-					if(strs[i].contains("@")){
-						//刚刚开始。解析数据类型
-						dataType = strs[i].subSequence( strs[i].indexOf("@")+12,strs[i].indexOf("@")+14).toString();
-						map.put("dataType",dataType);
-					}else{
-						//分析数据
-						if(strs[i].contains(":")){
-							map.put((strs[i].subSequence(0, strs[i].indexOf(":"))).toString().trim(),strs[i].subSequence( strs[i].indexOf(":")+1,strs[i].length()).toString().trim());
-						}
-					}
+		Map<String,String> map = new HashMap<String,String>();
+
+		String[] strs = str.split("\n");
+		if(strs.length > 45){
+			Toast.makeText(getApplicationContext(), "开始分析", Toast.LENGTH_SHORT).show();
+			String dataType="";
+			for (int i = 0;i<strs.length;i++){
+
+				//分析数据
+				if(strs[i].contains(":")){
+					String key =(strs[i].subSequence(0, strs[i].indexOf(":"))).toString().replace("-","").trim();
+					map.put(key,strs[i].subSequence( strs[i].indexOf(":")+1,strs[i].length()).toString().trim());
 				}
+
 			}
-			return map;
 		}
+		return map;
+	}
 
 }
