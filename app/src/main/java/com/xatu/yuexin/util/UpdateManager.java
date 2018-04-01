@@ -21,8 +21,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -247,9 +249,20 @@ public class UpdateManager {
 			return;
 		}
 		Intent i = new Intent(Intent.ACTION_VIEW);
-		i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
+		Uri data;
+		// 判断版本大于等于7.0
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			// "net.csdn.blog.ruancoder.fileprovider"即是在清单文件中配置的authorities
+			data = FileProvider.getUriForFile(mContext, "com.xatu.yuexin.welding4sl.fileprovider", apkfile);
+			// 给目标应用一个临时授权
+			i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+		} else {
+			data = Uri.fromFile(apkfile);
+		}
+		i.setDataAndType(data,
 				"application/vnd.android.package-archive");
 		mContext.startActivity(i);
+
 
 	}
 

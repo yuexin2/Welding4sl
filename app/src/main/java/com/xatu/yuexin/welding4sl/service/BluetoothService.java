@@ -203,10 +203,15 @@ public class BluetoothService extends Service {
 					//获取到数据，进行处理。
 					//String bluetoothStr = msg.getData().getString(TOAST);
 
-	                 Toast.makeText(getApplicationContext(), fmsg, Toast.LENGTH_SHORT).show();
+	                // Toast.makeText(getApplicationContext(), fmsg, Toast.LENGTH_SHORT).show();
 					Map map = analysisBluetoothStr(fmsg);
+					Toast.makeText(getApplicationContext(), "分析完成", Toast.LENGTH_SHORT).show();
 					if(map.size() > 1){
+						//说明数据传输完成
 						fmsg = "";
+						//将数据放到数据库中
+						WeldingDataFromMaptoDB wdf2db = new WeldingDataFromMaptoDB(getApplication());
+						wdf2db.fromMaptoDB(map);
 					}
 
 					break;
@@ -226,9 +231,12 @@ public class BluetoothService extends Service {
 			}
 		};
 
-		private Map<String,String> analysisBluetoothStr(String str){
+
+
+	private Map<String,String> analysisBluetoothStr(String str){
 			Map<String,String> map = new HashMap<String,String>();
 			if (str.substring(0,2).equals("(@") && str.substring(str.length()-2,str.length()).equals("#)")){//表示数据
+				Toast.makeText(getApplicationContext(), "开始分析", Toast.LENGTH_SHORT).show();
 				String[] strs = str.split("\n");
 				String dataType="";
 				for (int i = 0;i<strs.length;i++){

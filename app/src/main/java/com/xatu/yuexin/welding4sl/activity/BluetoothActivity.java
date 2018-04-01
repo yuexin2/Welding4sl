@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import com.xatu.yuexin.util.bluetooth.BluetoothChatService;
 import com.xatu.yuexin.util.bluetooth.BluetoothDeviceListActivity;
+import com.xatu.yuexin.welding4sl.AppContent;
 import com.xatu.yuexin.welding4sl.R;
 import com.xatu.yuexin.welding4sl.service.BluetoothService;
 
@@ -96,6 +97,10 @@ public class BluetoothActivity extends AppCompatActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		//生成UUID每次第一次进入生成UUID，为了表示service与手填的一致
+		AppContent.onlyUUID =  UUID.randomUUID().toString();
+
 //		X_SystemBarUI.initSystemBar(this, R.color.statusbar_bg);
 		// 设置窗口布局
 //		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);

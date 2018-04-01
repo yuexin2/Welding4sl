@@ -76,10 +76,9 @@ public class CheckFaceActivity extends AppCompatActivity  {
 
     private void showTakePhotoActivity() {
         // TODO: 检查权限是否足够
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)||
-                (ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)) {
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)) {
             //如果没有授权，则请求授权
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
         } else {
             // TODO: 需要考虑如果系统没有匹配的intent情况
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

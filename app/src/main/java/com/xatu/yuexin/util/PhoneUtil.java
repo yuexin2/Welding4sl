@@ -3,7 +3,8 @@ package com.xatu.yuexin.util;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
- 
+
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -11,6 +12,8 @@ import android.content.pm.PackageManager;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
  
@@ -31,6 +34,8 @@ public class PhoneUtil {
     }
  
     public static PhoneUtil getInstance(Context context){
+// TODO: 检查权限是否足够
+
         if (instance==null) {
             instance = new PhoneUtil(context);
         }else if(instance.act!=context){
