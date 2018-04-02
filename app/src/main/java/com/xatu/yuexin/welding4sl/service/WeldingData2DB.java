@@ -8,6 +8,7 @@ import com.xatu.yuexin.util.db.DataBaseManager;
 import com.xatu.yuexin.welding4sl.AppContent;
 import com.xatu.yuexin.welding4sl.vo.HotmeltData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,18 +19,17 @@ import java.util.Map;
 public class WeldingData2DB {
     public int STATIC_FAIL = 1;
     public int STATIC_SUCCESS = 2;
-
+    private DataBaseManager db =null;
     private Context context;
     public WeldingData2DB(Context c){
         this.context = c;
+        db = DataBaseManager.getInstance(context);
     }
 
 
-    public void BluetoothMaptoDB(Map map){
-        insertHot4Bluetooth(map);
-    }
 
-    private int insertHot4Bluetooth(Map map) {
+
+    public int insertHot4Bluetooth(Map map) {
         DataBaseManager db = DataBaseManager.getInstance(context);
         // TODO Auto-generated method stub
         int res = 0;
@@ -37,12 +37,10 @@ public class WeldingData2DB {
         // Connection conn = JdbcUtils.getConnection();
         String[] msgs ={"","","","","","","0","","","","",""};//初始化解决即使没有GPS信息也可插入
 
-        String checkSql = "select * from "+DBHelper.TB_NAME_WELDING_DATA_HOT+" where uuid = "+AppContent.onlyUUID;
         try {
 
             String sql = "";
-             List list = db.queryData2Map(checkSql,new String[]{},new HotmeltData());
-            if(list.size()>=1){
+            if(isHaveData()){
                 sql = "update "+ DBHelper.TB_NAME_WELDING_DATA_HOT + " set HCompany = '"+map.get("COMPANYCODE")+"' , HManagement = '"+map.get("PILOTFUSENo")+"'," +
                         "HNo = '"+map.get("N.WELD")+"',HDate='"+map.get("DATE")+"',HHour='"+map.get("HOUR")+"',HEnd='"+map.get("COMPLETION HOUR")+"'," +
                         "HProject='"+map.get("PROJECT MANAGER")+"',HOperat='"+map.get("OPERATOR")+"',HWay='"+map.get("PLACE")+"',HInfo='"+map.get("WELD BOND CODE")+"'," +
@@ -95,5 +93,43 @@ public class WeldingData2DB {
     }
 
 
+    public void insertInput2DB(Map map){
+
+        /**
+         * 工程编号：Hway
+         * 焊工编号：HOperat
+         * 焊口编号：HInfo
+         * 监理员编号（项目经理，该字段原来为项目经理，现在被监理员占用）：HProject
+         * 质检员编号（工程管理员编号，这两个用的是一个字段）：HConstruction_code
+         * 施工企业编号（热熔没有，电熔有）
+         * 管理编号（热熔没有，电熔有）
+         */
+        String sql = "";
+        if(isHaveData()){
+            sql = "update "+DBHelper.TB_NAME_WELDING_DATA_HOT+" set Hway='"+map.get("Hway")+"', HOperat='"+map.get("HOperat")+"', " +
+                    "HInfo='"+map.get("HInfo")+"', HProject='"+map.get("HProject")+"', HConstruction_code='"+map.get("HConstruction_code")+"' where uuid='"+AppContent.onlyUUID+"'";
+        }else{
+            sql = "insert into "+DBHelper.TB_NAME_WELDING_DATA_HOT+"(Hway,HOperat,HInfo,HProject,HConstruction_code,uuid) " +
+                    "values('"+map.get("Hway")+"','"+map.get("HOperat")+"','"+map.get("HInfo")+"','"+map.get("HProject")+"','"+map.get("HConstruction_code")+"','"+AppContent.onlyUUID+"')";
+        }
+
+        try{
+            db.insertDataBySql(sql,new String[]{});
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private boolean isHaveData(){
+        String checkSql = "select * from "+DBHelper.TB_NAME_WELDING_DATA_HOT+" where uuid = '"+AppContent.onlyUUID+"'";
+        List list = new ArrayList();
+        try {
+            list = db.queryData2Map(checkSql, new String[]{}, new HotmeltData());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return list.size()>=1;
+    }
 }
 

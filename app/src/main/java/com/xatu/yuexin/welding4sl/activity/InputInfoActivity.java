@@ -1,5 +1,6 @@
 package com.xatu.yuexin.welding4sl.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.xatu.yuexin.welding4sl.R;
+import com.xatu.yuexin.welding4sl.service.BluetoothService;
+import com.xatu.yuexin.welding4sl.service.WeldingData2DB;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class InputInfoActivity extends AppCompatActivity {
 
@@ -45,6 +51,30 @@ public class InputInfoActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             //想法，先判断由蓝牙service获取数据。若没有数据则一直等待
+            /**
+             * 工程编号：Hway
+             * 焊工编号：HOperat
+             * 焊口编号：HInfo
+             * 监理员编号（项目经理，该字段原来为项目经理，现在被监理员占用）：HProject
+             * 质检员编号（工程管理员编号，这两个用的是一个字段）：HConstruction_code
+             * 施工企业编号（热熔没有，电熔有）
+             * 管理编号（热熔没有，电熔有）
+             */
+            Map map = new HashMap();
+            map.put("Hway",projectNum.getText().toString());
+            map.put("HOperat",hgNum.getText().toString());
+            map.put("HInfo",hkNum.getText().toString());
+            map.put("HProject",jlNum.getText().toString());
+            map.put("HConstruction_code",zjNum.getText().toString());
+            WeldingData2DB wdf2db = new WeldingData2DB(getApplication());
+            wdf2db.insertInput2DB(map);
+
+            Intent stopBluetoothService = new Intent(InputInfoActivity.this,BluetoothService.class);
+            stopService(stopBluetoothService);
+
+            Intent intent = new Intent( InputInfoActivity.this , LoginActivity.class);
+            startActivity(intent);
+            InputInfoActivity.this.finish();
         }
     };
 

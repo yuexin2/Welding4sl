@@ -205,7 +205,7 @@ public class BluetoothService extends Service {
 						fmsg = "";
 						//将数据放到数据库中
 						WeldingData2DB wdf2db = new WeldingData2DB(getApplication());
-						wdf2db.BluetoothMaptoDB(map);
+						wdf2db.insertHot4Bluetooth(map);
 					}
 
 					break;
