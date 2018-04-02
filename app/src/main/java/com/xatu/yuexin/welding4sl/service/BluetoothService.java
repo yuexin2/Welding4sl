@@ -9,7 +9,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
@@ -58,7 +57,6 @@ public class BluetoothService extends Service {
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
-		//Toast.makeText(getApplicationContext(), "onCreate", Toast.LENGTH_SHORT).show();
 		// 得到当地的蓝牙适配器
 		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 		if (mChatService == null)
@@ -69,7 +67,6 @@ public class BluetoothService extends Service {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-		//Toast.makeText(getApplicationContext(), "onDestroy", Toast.LENGTH_SHORT).show();
 		// 蓝牙聊天服务站
 		if (mChatService != null)
 			mChatService.stop();
@@ -112,9 +109,7 @@ public class BluetoothService extends Service {
 		}else{
 			
 		}
-		
-		// TODO Auto-generated method stub
-		//Toast.makeText(getApplicationContext(), "onStartCommand", Toast.LENGTH_SHORT).show();
+
 		int requestCode = intent.getExtras().getInt("requestCode");
 		int resultCode = intent.getExtras().getInt("resultCode");
 		switch (requestCode) {
@@ -209,8 +204,8 @@ public class BluetoothService extends Service {
 						//说明数据传输完成
 						fmsg = "";
 						//将数据放到数据库中
-						WeldingDataFromMaptoDB wdf2db = new WeldingDataFromMaptoDB(getApplication());
-						wdf2db.fromMaptoDB(map);
+						WeldingData2DB wdf2db = new WeldingData2DB(getApplication());
+						wdf2db.BluetoothMaptoDB(map);
 					}
 
 					break;
@@ -237,7 +232,6 @@ public class BluetoothService extends Service {
 
 		String[] strs = str.split("\n");
 		if(strs.length > 45){
-			Toast.makeText(getApplicationContext(), "开始分析", Toast.LENGTH_SHORT).show();
 			String dataType="";
 			for (int i = 0;i<strs.length;i++){
 
