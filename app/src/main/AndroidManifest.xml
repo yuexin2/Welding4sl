@@ -51,6 +51,7 @@
         <!-- service -->
         <service android:name=".service.BluetoothService" />
         <service android:name=".service.MyService" />
+        <service android:name="com.xatu.yuexin.util.gps.GpsService"/>
         <!-- service -->
 
 
@@ -65,7 +66,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
+        <service
+            android:name="com.xatu.yuexin.util.gps.GPSService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

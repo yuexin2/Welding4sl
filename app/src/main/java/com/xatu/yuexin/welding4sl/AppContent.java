@@ -35,5 +35,10 @@ public final class AppContent extends Application implements Serializable{
     public static String sendJsonUrl = "http://1.82.190.46/DataChangeServlet?json=";
     public static int canUsingDay = 5;
     public static AppUtils appUtils = null;
+	public static String latitude = "99.9999999999";//纬度
+	public static String longitude = "999.9999999999";//经度
+	public static String gpstime = "";//gps时间
+	public static String gpsHigh = "";//GPS高度
+	public static String gpsStatue = "";//gps状态
 
 }

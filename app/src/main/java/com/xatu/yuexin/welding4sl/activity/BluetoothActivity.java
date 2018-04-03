@@ -42,6 +42,7 @@ import android.widget.Toast;
 
 import com.xatu.yuexin.util.bluetooth.BluetoothChatService;
 import com.xatu.yuexin.util.bluetooth.BluetoothDeviceListActivity;
+import com.xatu.yuexin.util.gps.GpsService;
 import com.xatu.yuexin.welding4sl.AppContent;
 import com.xatu.yuexin.welding4sl.R;
 import com.xatu.yuexin.welding4sl.service.BluetoothService;
@@ -100,6 +101,9 @@ public class BluetoothActivity extends AppCompatActivity {
 
 		//生成UUID每次第一次进入生成UUID，为了表示service与手填的一致
 		AppContent.onlyUUID =  UUID.randomUUID().toString();
+		//重回来的时候重新启动service
+		Intent it = new Intent(BluetoothActivity.this, GpsService.class); //你要转向的Activity
+		startService(it); //执行
 
 //		X_SystemBarUI.initSystemBar(this, R.color.statusbar_bg);
 		// 设置窗口布局

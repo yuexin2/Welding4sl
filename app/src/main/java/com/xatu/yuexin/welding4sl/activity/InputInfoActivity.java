@@ -10,10 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.xatu.yuexin.util.gps.GpsService;
+import com.xatu.yuexin.welding4sl.AppContent;
 import com.xatu.yuexin.welding4sl.R;
 import com.xatu.yuexin.welding4sl.service.BluetoothService;
 import com.xatu.yuexin.welding4sl.service.WeldingData2DB;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,6 +75,15 @@ public class InputInfoActivity extends AppCompatActivity {
 
             Intent stopBluetoothService = new Intent(InputInfoActivity.this,BluetoothService.class);
             stopService(stopBluetoothService);
+
+            Intent stopgpsService = new Intent(InputInfoActivity.this,GpsService.class);
+            stopService(stopgpsService);
+            AppContent.latitude = "99.9999999999";//纬度
+            AppContent.longitude = "999.9999999999";//纬度
+
+            AppContent.gpstime = "";
+            AppContent.gpsHigh = "";
+            AppContent.gpsStatue = "";
 
             Intent intent = new Intent( InputInfoActivity.this , LoginActivity.class);
             startActivity(intent);

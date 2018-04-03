@@ -30,11 +30,7 @@ public class WeldingData2DB {
     private Context context;
 //    private LocationManager lm;
 
-    private String latitude = "99.9999999999";//纬度
-    private String longitude = "999.9999999999";//经度
-    private String gpstime = "";//gps时间
-    private String gpsHigh = "";//GPS高度
-    private String gpsStatue = "";//gps状态
+
     public WeldingData2DB(Context c){
         this.context = c;
         db = DataBaseManager.getInstance(context);
@@ -86,8 +82,8 @@ public class WeldingData2DB {
                         "HTsRe='"+map.get("SOAK_REALTIME")+"',HTej='"+map.get("DWELL TIME")+"',HTup='"+map.get("SETTING PRESSURE TIME")+"',HPf='"+map.get("FUSION")+"'," +
                         "HPmF='"+map.get("FUSION_MEANPRESSURE")+"',HTf='"+map.get("FUSION_TIME")+"',HTfRe='"+map.get("FUSION_REALTIME")+"',HPco='"+map.get("COOLING")+"'," +
                         "HPmC='"+map.get("COOLING_MEANPRESSURE")+"',HTCo='"+map.get("COOLING_TIME")+"',HTrCo='"+map.get("COOLING_REALTIME")+"',HEr='"+map.get("INFORMATIONS")+"'," +
-                        "HGPS_UTC='"+gpstime+"',HGPS_latitude='"+latitude.substring(0, 2) + "度" + latitude.substring(2, latitude.length()) + "分"+"'," +
-                        "HGPS_longitude='"+longitude.substring(0, 3) + "度" + longitude.substring(3, longitude.length()) + "分"+"',HGPS_status='"+gpsStatue+"',HGPS_high='"+gpsHigh+"') where uuid = '"+AppContent.onlyUUID+"'";
+                        "HGPS_UTC='"+AppContent.gpstime+"',HGPS_latitude='"+AppContent.latitude.substring(0, 2) + "度" + AppContent.latitude.substring(2, AppContent.latitude.length()) + "分"+"'," +
+                        "HGPS_longitude='"+AppContent.longitude.substring(0, 3) + "度" + AppContent.longitude.substring(3, AppContent.longitude.length()) + "分"+"',HGPS_status='"+AppContent.gpsStatue+"',HGPS_high='"+AppContent.gpsHigh+"') where uuid = '"+AppContent.onlyUUID+"'";
             }else {
                 sql = "insert into " + DBHelper.TB_NAME_WELDING_DATA_HOT + "(uuid, HCompany,HManagement,HNo,HDate,HHour,HEnd,HProject,HOperat,HWay,HInfo,HMode,HPipe1,HBrand1,HPipe2,HBrand2,HConstruction_code,HTemp,HNorme,HPE11,HDiam,HThick,HTHE,HDrg,HPb,HPmB,HTb,HTbRe,HPs,HPmS,HTs,HTsRe,HTej,HTup,HPf,HPmF,HTf,HTfRe,HPco,HPmC,HTCo,HTrCo,HEr,HGPS_UTC,HGPS_latitude,HGPS_longitude,HGPS_status,HGPS_high)"
                         + " values ('"
@@ -103,15 +99,15 @@ public class WeldingData2DB {
                         + map.get("FUSION_MEANPRESSURE")+ "','"+ map.get("FUSION_TIME")+ "','"+ map.get("FUSION_REALTIME")+ "','"+ map.get("COOLING")+ "','"
                         + map.get("COOLING_MEANPRESSURE")+ "','"+ map.get("COOLING_TIME")+ "','"+ map.get("COOLING_REALTIME")+ "','"+ map.get("INFORMATIONS")
                         + "','"
-                        + gpstime
+                        + AppContent.gpstime
                         + "','"
-                        + latitude.substring(0, 2) + "度" + latitude.substring(2, latitude.length()) + "分"
+                        + AppContent.latitude.substring(0, 2) + "度" + AppContent.latitude.substring(2, AppContent.latitude.length()) + "分"
                         + "','"
-                        + longitude.substring(0, 3) + "度" + longitude.substring(3, longitude.length()) + "分"
+                        + AppContent.longitude.substring(0, 3) + "度" + AppContent.longitude.substring(3, AppContent.longitude.length()) + "分"
                         + "','"
-                        + gpsStatue
+                        + AppContent.gpsStatue
                         + "','"
-                        + gpsHigh
+                        + AppContent.gpsHigh
                         + "')";
 
             }
@@ -143,12 +139,12 @@ public class WeldingData2DB {
         if(isHaveData()){
             sql = "update "+DBHelper.TB_NAME_WELDING_DATA_HOT+" set Hway='"+map.get("Hway")+"', HOperat='"+map.get("HOperat")+"', " +
                     "HInfo='"+map.get("HInfo")+"', HProject='"+map.get("HProject")+"', HConstruction_code='"+map.get("HConstruction_code")+"', " +
-                    "HGPS_UTC='"+gpstime+"',HGPS_latitude='"+latitude.substring(0, 2) + "度" + latitude.substring(2, latitude.length()) + "分"+"'," +
-                    "HGPS_longitude='"+longitude.substring(0, 3) + "度" + longitude.substring(3, longitude.length()) + "分"+"',HGPS_status='"+gpsStatue+"',HGPS_high='"+gpsHigh+"' where uuid='"+AppContent.onlyUUID+"'";
+                    "HGPS_UTC='"+AppContent.gpstime+"',HGPS_latitude='"+AppContent.latitude.substring(0, 2) + "度" + AppContent.latitude.substring(2, AppContent.latitude.length()) + "分"+"'," +
+                    "HGPS_longitude='"+AppContent.longitude.substring(0, 3) + "度" + AppContent.longitude.substring(3, AppContent.longitude.length()) + "分"+"',HGPS_status='"+AppContent.gpsStatue+"',HGPS_high='"+AppContent.gpsHigh+"' where uuid='"+AppContent.onlyUUID+"'";
         }else{
             sql = "insert into "+DBHelper.TB_NAME_WELDING_DATA_HOT+"(Hway,HOperat,HInfo,HProject,HConstruction_code,HGPS_UTC,HGPS_latitude,HGPS_longitude,HGPS_status,HGPS_high,uuid) " +
-                    "values('"+map.get("Hway")+"','"+map.get("HOperat")+"','"+map.get("HInfo")+"','"+map.get("HProject")+"','"+map.get("HConstruction_code")+"','HGPS_UTC='"+gpstime+"',HGPS_latitude='"+latitude.substring(0, 2) + "度" + latitude.substring(2, latitude.length()) + "分"+"'," +
-            "HGPS_longitude='"+longitude.substring(0, 3) + "度" + longitude.substring(3, longitude.length()) + "分"+"',HGPS_status='"+gpsStatue+"',HGPS_high='"+gpsHigh+"','"+AppContent.onlyUUID+"')";
+                    "values('"+map.get("Hway")+"','"+map.get("HOperat")+"','"+map.get("HInfo")+"','"+map.get("HProject")+"','"+map.get("HConstruction_code")+"','HGPS_UTC='"+AppContent.gpstime+"',HGPS_latitude='"+AppContent.latitude.substring(0, 2) + "度" + AppContent.latitude.substring(2, AppContent.latitude.length()) + "分"+"'," +
+            "HGPS_longitude='"+AppContent.longitude.substring(0, 3) + "度" + AppContent.longitude.substring(3, AppContent.longitude.length()) + "分"+"',HGPS_status='"+AppContent.gpsStatue+"',HGPS_high='"+AppContent.gpsHigh+"','"+AppContent.onlyUUID+"')";
         }
 
         try{

@@ -18,6 +18,7 @@ import com.xatu.yuexin.util.FileUtils;
 import com.xatu.yuexin.util.NetUtils;
 import com.xatu.yuexin.util.PhoneUtil;
 import com.xatu.yuexin.util.UpdateManager;
+import com.xatu.yuexin.util.gps.GpsService;
 import com.xatu.yuexin.welding4sl.AppContent;
 import com.xatu.yuexin.welding4sl.R;
 import com.xatu.yuexin.welding4sl.service.MyService;
@@ -104,6 +105,7 @@ public class HelloActivity extends AppCompatActivity {
         startService();
     }
     protected void startService(){
+
         mUpdateManager = new UpdateManager(HelloActivity.this);
 //        if(false == NetUtils.isConnected(getApplicationContext())){
 //            AppContent.hasAD = false;
