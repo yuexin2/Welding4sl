@@ -230,11 +230,13 @@ public class BluetoothService extends Service {
 	private Map<String,String> analysisBluetoothStr(String str){
 		Map<String,String> map = new HashMap<String,String>();
 
-		String[] strs = str.split("\n");
-		if(strs.length > 45){
+
+		String tempStr = str.replaceAll("\n","");
+		if(tempStr.contains("INFORMATIONS")){//表示最后一个数据过来了
+			String[] strs = str.split("\r\n");
 			String dataType="";
 			for (int i = 0;i<strs.length;i++){
-
+				strs[i] = strs[i].replaceAll("\n","");
 				//分析数据
 				if(strs[i].contains(":")){
 					String key =(strs[i].subSequence(0, strs[i].indexOf(":"))).toString().replace("-","").trim();
